@@ -4,17 +4,17 @@
   system,
   pkgs,
   lib,
-  busybox,
-  opencode,
-  mem ? 4096,
+  mem ? 8192,
   vcpu ? 4,
-  storeSize ? 8192,
+  storeSize ? 32768,
   forwardPorts ? [],
-  baseEnv ? [busybox],
+  baseEnv ? [pkgs.busybox],
   extraEnv ? [],
-  opencodePackage ? opencode,
-  opencodeConfig ? null,
   volumeName ? "nix-store-overlay",
+  opencode ? {
+    package = pkgs.opencode;
+    config = null;
+  },
   ...
 }: let
   configuration = nixpkgs.lib.nixosSystem {
@@ -33,9 +33,8 @@
             forwardPorts
             baseEnv
             extraEnv
-            opencodePackage
-            opencodeConfig
             volumeName
+            opencode
             ;
         };
       })

@@ -21,8 +21,8 @@ in {
 
   environment.systemPackages = cfg.baseEnv ++ cfg.extraEnv;
 
-  environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencodeConfig != null) {
-    text = cfg.opencodeConfig;
+  environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencode.config != null) {
+    text = cfg.opencode.config;
   };
 
   programs.bash.shellInit = ''
@@ -58,7 +58,7 @@ in {
       trap restore_opencode_config EXIT
     fi
 
-    ${lib.getExe cfg.opencodePackage}
+    ${lib.getExe cfg.opencode.package}
 
     rc=$?
 
