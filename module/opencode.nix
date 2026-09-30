@@ -26,7 +26,9 @@ in {
   };
 
   programs.bash.shellInit = ''
-    cd work
+    work=/home/user/work
+
+    cd "$work"
 
     if [ -f .env ]; then
       echo "Loading environment..."
@@ -66,6 +68,7 @@ in {
       restore_opencode_config
       trap - EXIT
     fi
+
     if [ $rc -eq 0 ]; then
       sudo poweroff
     fi

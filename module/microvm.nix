@@ -26,7 +26,7 @@
   microvm.shares = [
     {
       tag = "work";
-      source = "./.";
+      source = ".sandbox";
       mountPoint = "/home/user/work";
     }
   ];

@@ -2,3 +2,4 @@ result
 *.img
 .env
 core*
+.sandbox
