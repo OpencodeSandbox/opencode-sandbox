@@ -6,7 +6,7 @@
   in {
     packages.${system} = rec {
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
-        forwardPorts = ["8888"];
+        forwardPorts = [8888];
         opencodeConfig = ./opencode.jsonc;
       };
 

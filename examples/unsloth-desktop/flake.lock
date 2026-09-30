@@ -44,14 +44,15 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-aYvKS1SvPB1uNCnor56K302JfUhJVT+fxu6wx6z+Kyc=",
         "path": "../../.",
         "type": "path"
       },
       "original": {
         "path": "../../.",
         "type": "path"
-      },
-      "parent": []
+      }
     },
     "root": {
       "inputs": {
