@@ -1,3 +1,4 @@
 result
 *.img
 .env
+core*

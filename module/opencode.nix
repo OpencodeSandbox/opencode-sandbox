@@ -2,7 +2,9 @@
   config,
   lib,
   ...
-}: {
+}: let
+  cfg = config.opencode-sandbox;
+in {
   services.getty.autologinUser = "user";
   users.users.user = {
     password = "";
@@ -17,9 +19,11 @@
     wheelNeedsPassword = false;
   };
 
-  environment.systemPackages =
-    config.opencode-sandbox.baseEnv
-    ++ config.opencode-sandbox.extraEnv;
+  environment.systemPackages = cfg.baseEnv ++ cfg.extraEnv;
+
+  environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencodeConfig != null) {
+    text = cfg.opencodeConfig;
+  };
 
   programs.bash.shellInit = ''
     cd work
@@ -31,6 +35,39 @@
       set +a
     fi
 
-    ${lib.getExe config.opencode-sandbox.opencodePackage} && sudo poweroff
+    backup=/etc/opencode-sandbox
+
+    restore_opencode_config() {
+      rm -f opencode.jsonc
+      for f in opencode.jsonc opencode.json; do
+        if [ -f "$backup/$f.bak" ]; then
+          mv "$backup/$f.bak" "$f"
+        fi
+      done
+    }
+
+    sandboxed_opencode_config=0
+
+    if [ -f "$backup/opencode.jsonc" ]; then
+      for f in opencode.jsonc opencode.json; do
+        mv "$f" "$backup/$f.bak"
+      done
+
+      cp "$backup/opencode.jsonc" opencode.jsonc
+      sandboxed_opencode_config=1
+      trap restore_opencode_config EXIT
+    fi
+
+    ${lib.getExe cfg.opencodePackage}
+
+    rc=$?
+
+    if [ "$sandboxed_opencode_config" = 1 ]; then
+      restore_opencode_config
+      trap - EXIT
+    fi
+    if [ $rc -eq 0 ]; then
+      sudo poweroff
+    fi
   '';
 }

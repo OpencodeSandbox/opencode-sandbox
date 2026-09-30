@@ -8,9 +8,9 @@
       port: {
         from = "guest";
         guest.address = "10.0.2.10";
-        guest.port = 8888;
+        guest.port = port;
         host.address = "127.0.0.1";
-        host.port = 8888;
+        host.port = port;
       }
     )
     config.opencode-sandbox.forwardPorts;

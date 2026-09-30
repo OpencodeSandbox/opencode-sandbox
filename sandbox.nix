@@ -13,6 +13,7 @@
   baseEnv ? [busybox],
   extraEnv ? [],
   opencodePackage ? opencode,
+  opencodeConfig ? null,
   volumeName ? "nix-store-overlay",
   ...
 }: let
@@ -33,6 +34,7 @@
             baseEnv
             extraEnv
             opencodePackage
+            opencodeConfig
             volumeName
             ;
         };
