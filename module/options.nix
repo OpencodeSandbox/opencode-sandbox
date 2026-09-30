@@ -11,7 +11,7 @@
         Amount of RAM made available to the sandbox in megabytes.
 
         Setting the limit too low won't cause the sandbox to crash but might
-        result in certain processes being unexpectadly terminated.
+        result in certain processes being unexpectedly terminated.
       '';
     };
 
@@ -30,8 +30,8 @@
         Host storage reserved for the sandbox's nix store in megabytes.
 
         Data stored here is not persisted and is wiped on shutdown and restart.
-        Make sure to set a high enough limit in accordance to your usecase as
-        nix evalution will fail if the store is full.
+        Make sure to set a high enough limit in accordance to your use case as
+        nix evaluation will fail if the store is full.
       '';
     };
 
@@ -45,7 +45,7 @@
         This is mostly useful when exposing host services such as a local
         inference server which would be too impractical to run inside of a
         sandboxed environment. Special care should be taken when using this
-        option not to expose any sensitive services.
+        option not to expose any sensitive or privileged services.
       '';
     };
 
@@ -55,7 +55,7 @@
       description = ''
         Base packages which make up the agent's default set of tools.
 
-        When adding new tooling, it is preferrable to edit `extraEnv` instead.
+        When adding new tooling, it is preferable to edit `extraEnv` instead.
         Only edit `baseEnv` if you wish to _remove_ certain tools which you do
         not want the agent to have access to.
       '';
@@ -68,7 +68,7 @@
       description = ''
         Extra packages which are used to augment the agent's available tooling.
 
-        Use this to add project-specific tooling. It is a generally good idea to
+        Use this to add project-specific tooling. It is generally a good idea to
         have `extraEnv` match your own development environment to make it easier
         for you to apply the agent's changes on the host.
       '';

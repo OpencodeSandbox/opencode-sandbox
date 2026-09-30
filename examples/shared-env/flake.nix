@@ -17,9 +17,7 @@
       # The sandbox re-uses the same environment as the main dev shell
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
-          forwardPorts = [8888];
           extraEnv = [devenv];
-          opencode.config = ./opencode.jsonc;
         };
       };
 
