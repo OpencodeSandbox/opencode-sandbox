@@ -4,17 +4,7 @@
   system,
   pkgs,
   lib,
-  mem ? 8192,
-  vcpu ? 4,
-  storeSize ? 32768,
-  forwardPorts ? [],
-  baseEnv ? [pkgs.busybox],
-  extraEnv ? [],
-  volumeName ? "nix-store-overlay",
-  opencode ? {
-    package = pkgs.opencode;
-    config = null;
-  },
+  opencode-sandbox ? {},
   ...
 }: let
   configuration = nixpkgs.lib.nixosSystem {
@@ -25,23 +15,13 @@
       self.nixosModules.sandbox
 
       ({...}: {
-        config.opencode-sandbox = {
-          inherit
-            mem
-            vcpu
-            storeSize
-            forwardPorts
-            baseEnv
-            extraEnv
-            volumeName
-            opencode
-            ;
-        };
+        config.opencode-sandbox = opencode-sandbox;
       })
     ];
   };
 
   runner = configuration.config.microvm.declaredRunner;
+  volumeName = configuration.config.opencode-sandbox.volumeName;
 in
   pkgs.writeShellScriptBin "sandbox" ''
     rm -f ${volumeName}.img

@@ -18,13 +18,4 @@
   },
 
   "model": "unsloth-studio/unsloth/Qwen3.8-27B-GGUF:UD-Q8_K_XL",
-
-  "lsp": {
-    "rust": {
-      "command": ["rust-analyzer"],
-      "env": {
-        "RUST_LOG": "debug"
-      }
-    }
-  }
 }
