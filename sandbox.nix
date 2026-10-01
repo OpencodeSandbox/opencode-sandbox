@@ -28,55 +28,42 @@ in
     GREEN="\e[3;32m"
     RESET="\e[0m"
 
-    # Check for uncommited files
+    shopt -s extglob dotglob nullglob
 
-    if [ $(git status --short | wc -l) -gt 0 ]; then
-        echo -e "''${RED}Uncommited files will not be added to the sandbox''${RESET}"
-        read -p "This folder contains uncommited files, are you sure you want to proceed? (y|N) " -n 1 -r
-        echo
-
-        if [[ ! $REPLY =~ ^[yY]$ ]]; then
-            exit 1;
-        fi
-    fi
-
-    # Creates a new worktree for the agent to work in. Only the latest commit
-    # state is copied. This allows the user to keep working on the host without
-    # any file conflicts.
-
-    echo -e "''${GREEN}Creating sandbox''${RESET}"
+    # Sandbox runs off a shared `.sandbox` folder which contains a copy of the
+    # current git repo.
 
     sandbox=.sandbox
 
-    clear_worktree_state() {
-      git worktree remove -f "$sandbox"
-      git branch -D sandbox
-    }
+    # Sandbox state is cleaned up both on start and shutdown in case we weren't
+    # able to clean up during the previous run.
 
-    git worktree add -b sandbox "$sandbox"
-    trap clear_worktree_state EXIT
+    rm -f ${volumeName}.img
+    rm -rf "$sandbox"
 
-    # Copy .env to worktree. Since it is HOPEFULLY gitignored this has to be
-    # done manually.
+    echo -e "''${GREEN}Creating sandbox''${RESET}"
+    mkdir "$sandbox"
+    cp -r -- ./!("$sandbox") "$sandbox"
 
-    echo -e "''${GREEN}Copying environment''${RESET}"
+    # Sandbox agents are given a new, random branch to work with. The default
+    # branch is removed in the sandbox to discourage switching back to it.
 
-    if [ -f .env ]; then
-      cp .env "$sandbox"
-    fi
+    echo -e "''${GREEN}Initializing sandbox branch''${RESET}"
+
+    branch_pre=$(git branch --show-current)
+    branch_new="sandbox-$(${lib.getExe pkgs.openssl} rand -hex 4)"
+    $(cd "$sandbox" && git switch -c "$branch_new")
+    $(cd "$sandbox" && git branch -D "$branch_pre")
 
     echo -e "''${GREEN}Launching VM''${RESET}"
 
-    rm -f ${volumeName}.img
     ${lib.getExe runner}
 
     # Code written by the agent only exists for the duration of the session and
     # is rm'd on exit.
 
-    echo -e "''${GREEN}Cleaning state''${RESET}"
+    echo -e "''${RED}Removing sandbox state''${RESET}"
 
-    clear_worktree_state
     rm -f ${volumeName}.img
-
-    trap - EXIT
+    rm -rf "$sandbox"
   ''
