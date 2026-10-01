@@ -16,7 +16,7 @@
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
           forwardPorts = [8888];
-          extraEnv = [pkgs.nixd];
+          extraEnv = with pkgs; [nil alejandra];
           opencode.config = ./opencode.jsonc;
         };
       };

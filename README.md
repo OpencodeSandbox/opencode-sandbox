@@ -52,6 +52,20 @@ self-contained examples under the `examples/` folder.
 nix run ./examples/shared-env
 ```
 
+## Configuration
+
+Opencode likes to ask for user confirmations when accessing folders outside of its project
+directory. This makes sense on the host machine but ends up being a hindrance when running inside of
+a sandboxed environment. To disable this, add the following to your `opencode.jsonc` config:
+
+```jsonc
+"permission": {
+  "external_directory": {
+    "*": "allow"
+  }
+}
+```
+
 ## Implementation
 
 Sandboxing works by having the host create a new throw-away `.sandbox` folder into which the
