@@ -28,9 +28,7 @@ in {
   programs.bash.shellInit =
     # bash
     ''
-      work=/home/user/work
-
-      cd "$work"
+      cd /home/user/work
 
       if [ -f .env ]; then
         echo "Loading environment..."
@@ -43,7 +41,7 @@ in {
 
       if [ -f "$config/opencode.jsonc" ]; then
         echo "Loading configuration..."
-        cp "$config/opencode.jsonc" opencode.jsonc
+        export OPENCODE_CONFIG="$config/opencode.jsonc"
       fi
 
       ${lib.getExe cfg.opencode.package}
