@@ -24,11 +24,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1790578696,
-        "narHash": "sha256-ZoxIApko70jCdbH3l20HWXOBaT2HZd87orzd2yJ9dVE=",
+        "lastModified": 1790689126,
+        "narHash": "sha256-ilerN1WLSvF+HMjziC/Wv99J5y02maDH+6hZPwsORKg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7a0f122f5090cf4c2ade2a13a0e229d4e19ba71f",
+        "rev": "b4fd65b198c599cbe814fcb9f42d25d021595ec9",
         "type": "github"
       },
       "original": {
@@ -41,11 +41,13 @@
     "opencode-sandbox": {
       "inputs": {
         "microvm": "microvm",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-CfhOrSr0BMVR8yzrFiu3UokpY4tUxz/Q/RsN/toIf48=",
+        "narHash": "sha256-29keeFf+QgfGK9jxJY9+i2FDFDonOkEckGDy32cB0X8=",
         "path": "../../.",
         "type": "path"
       },
@@ -56,6 +58,7 @@
     },
     "root": {
       "inputs": {
+        "nixpkgs": "nixpkgs",
         "opencode-sandbox": "opencode-sandbox"
       }
     },
