@@ -107,6 +107,10 @@
           };
         };
       };
+      default = {
+        package = pkgs.opencode;
+        config = null;
+      };
     };
 
     volumeName = lib.mkOption {
