@@ -39,39 +39,16 @@ in {
         set +a
       fi
 
-      backup=/etc/opencode-sandbox
+      config=/etc/opencode-sandbox
 
-      restore_opencode_config() {
-        rm -f opencode.jsonc
-        for f in opencode.jsonc opencode.json; do
-          if [ -f "$backup/$f.bak" ]; then
-            mv "$backup/$f.bak" "$f"
-          fi
-        done
-      }
-
-      sandboxed_opencode_config=0
-
-      if [ -f "$backup/opencode.jsonc" ]; then
-        for f in opencode.jsonc opencode.json; do
-          mv "$f" "$backup/$f.bak"
-        done
-
-        cp "$backup/opencode.jsonc" opencode.jsonc
-        sandboxed_opencode_config=1
-        trap restore_opencode_config EXIT
+      if [ -f "$config/opencode.jsonc" ]; then
+        echo "Loading configuration..."
+        cp "$config/opencode.jsonc" opencode.jsonc
       fi
 
       ${lib.getExe cfg.opencode.package}
 
-      rc=$?
-
-      if [ "$sandboxed_opencode_config" = 1 ]; then
-        restore_opencode_config
-        trap - EXIT
-      fi
-
-      if [ $rc -eq 0 ]; then
+      if [ $? -eq 0 ]; then
         sudo poweroff
       fi
     '';
