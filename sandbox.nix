@@ -1,9 +1,9 @@
 {
   self,
   nixpkgs,
-  system,
   pkgs,
   lib,
+  system,
   opencode-sandbox ? {},
   ...
 }: let

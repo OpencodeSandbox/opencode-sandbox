@@ -30,7 +30,9 @@
       system,
       ...
     }: rec {
-      sandbox = pkgs.callPackage ./sandbox.nix {inherit self nixpkgs system;};
+      sandbox = pkgs.callPackage ./sandbox.nix {inherit self nixpkgs;};
+      docs = pkgs.callPackage ./docs {};
+
       default = sandbox;
     });
   };

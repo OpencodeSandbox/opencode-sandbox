@@ -51,7 +51,7 @@
 
       type = lib.types.listOf lib.types.ints.u16;
       default = [];
-      example = lib.literalExpression "[8888]";
+      example = "[8888]";
     };
 
     baseEnv = lib.mkOption {
@@ -78,10 +78,14 @@
 
       type = lib.types.listOf lib.types.package;
       default = [];
-      example = lib.literalExpression "[pkgs.cowsay]";
+      example = "[pkgs.cowsay]";
     };
 
     opencode = lib.mkOption {
+      description = ''
+        Opencode configuration options.
+      '';
+
       type = lib.types.submodule {
         options = {
           package = lib.mkOption {
@@ -102,23 +106,23 @@
               Any pre-existing `opencode.jsonc` or `opencode.json` is backed up first
               and restored afterwards, so user configurations are never modified.
             '';
-            example = lib.literalMD ''
-              ```json
+            example = ''
               {
                 "$schema": "https://opencode.ai/config.json",
                 "model": "anthropic/claude-sonnet-4-5",
-              }
-              ```
-            '';
+              }'';
 
             type = lib.types.nullOr (lib.types.coercedTo lib.types.path builtins.readFile lib.types.str);
-            default = null;
           };
         };
       };
     };
 
     git = lib.mkOption {
+      description = ''
+        Git configuration options
+      '';
+
       type = lib.types.submodule {
         options = {
           remote = lib.mkOption {
@@ -187,7 +191,7 @@
                   default = "GH_TOKEN";
                 };
 
-                credential = lib.mkOption {
+                credentials = lib.mkOption {
                   description = ''
                     Credential information to be passed to git.
 
@@ -200,8 +204,7 @@
                     protocol=https
                     host=github.com
                     username=x-access-token
-                    password=${"$"}${config.opencode-sandbox.git.auth.token}
-                  '';
+                    password=${"$"}${config.opencode-sandbox.git.auth.token}'';
                 };
               };
             };

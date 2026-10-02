@@ -54,7 +54,7 @@ in {
       if [ "${lib.boolToString cfg.git.auth.enabled}" == "true" ]; then
         echo "Setting up agent credentials..."
         git config --global credential.helper store
-        echo "${cfg.git.auth.credential}" | git credential approve
+        echo "${cfg.git.auth.credentials}" | git credential approve
       fi
 
       ${lib.getExe cfg.opencode.package}
