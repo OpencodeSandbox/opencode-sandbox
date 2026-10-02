@@ -5,27 +5,6 @@
   ...
 }: {
   options.opencode-sandbox = {
-    mem = lib.mkOption {
-      description = ''
-        Amount of RAM made available to the sandbox in megabytes.
-
-        Setting the limit too low won't cause the sandbox to crash but might
-        result in certain processes being unexpectedly terminated.
-      '';
-
-      type = lib.types.ints.unsigned;
-      default = 8192;
-    };
-
-    vcpu = lib.mkOption {
-      description = ''
-        Number of virtual CPU cores made available to the sandbox.
-      '';
-
-      type = lib.types.ints.unsigned;
-      default = 4;
-    };
-
     storeSize = lib.mkOption {
       description = ''
         Host storage reserved for the sandbox's nix store in megabytes.
@@ -54,31 +33,72 @@
       example = "[8888]";
     };
 
-    baseEnv = lib.mkOption {
+    env = lib.mkOption {
       description = ''
-        Base packages which make up the agent's default set of tools.
-
-        When adding new tooling, it is preferable to edit `extraEnv` instead.
-        Only edit `baseEnv` if you wish to _remove_ certain tools which you do
-        not want the agent to have access to.
+        Virtual machine development environment.
       '';
 
-      type = lib.types.listOf lib.types.package;
-      default = with pkgs; [busybox git];
+      type = lib.types.submodule {
+        options = {
+          base = lib.mkOption {
+            description = ''
+              Base packages which make up the agent's default set of tools.
+
+              When adding new tooling, it is preferable to edit `env.extend` instead.
+              Only edit `env.base` if you wish to _remove_ certain tools which you do
+              not want the agent to have access to.
+            '';
+
+            type = lib.types.listOf lib.types.package;
+            default = with pkgs; [busybox git];
+          };
+
+          extend = lib.mkOption {
+            description = ''
+              Extra packages which are used to augment the agent's available tooling.
+
+              Use this to add project-specific tooling. It is generally a good idea to
+              have `env.extend` match your own development environment to make it easier
+              for you to apply the agent's changes on the host.
+            '';
+
+            type = lib.types.listOf lib.types.package;
+            default = [];
+            example = "[pkgs.cowsay]";
+          };
+        };
+      };
     };
 
-    extraEnv = lib.mkOption {
+    limits = lib.mkOption {
       description = ''
-        Extra packages which are used to augment the agent's available tooling.
-
-        Use this to add project-specific tooling. It is generally a good idea to
-        have `extraEnv` match your own development environment to make it easier
-        for you to apply the agent's changes on the host.
+        Virtual machine resource constraints
       '';
 
-      type = lib.types.listOf lib.types.package;
-      default = [];
-      example = "[pkgs.cowsay]";
+      type = lib.types.submodule {
+        options = {
+          mem = lib.mkOption {
+            description = ''
+              Amount of RAM made available to the sandbox in megabytes.
+
+              Setting the limit too low won't cause the sandbox to crash but might
+              result in certain processes being unexpectedly terminated.
+            '';
+
+            type = lib.types.ints.unsigned;
+            default = 8192;
+          };
+
+          vcpu = lib.mkOption {
+            description = ''
+              Number of virtual CPU cores made available to the sandbox.
+            '';
+
+            type = lib.types.ints.unsigned;
+            default = 4;
+          };
+        };
+      };
     };
 
     opencode = lib.mkOption {

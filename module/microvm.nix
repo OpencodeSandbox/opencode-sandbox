@@ -1,7 +1,7 @@
 {config, ...}: {
   microvm.hypervisor = "qemu";
-  microvm.mem = config.opencode-sandbox.mem;
-  microvm.vcpu = config.opencode-sandbox.vcpu;
+  microvm.mem = config.opencode-sandbox.limits.mem;
+  microvm.vcpu = config.opencode-sandbox.limits.vcpu;
 
   microvm.forwardPorts =
     map (

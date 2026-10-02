@@ -19,7 +19,7 @@ in {
     wheelNeedsPassword = false;
   };
 
-  environment.systemPackages = cfg.baseEnv ++ cfg.extraEnv;
+  environment.systemPackages = cfg.env.base ++ cfg.env.extend;
 
   environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencode.config != null) {
     text = cfg.opencode.config;
