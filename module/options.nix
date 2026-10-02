@@ -118,5 +118,10 @@
       default = "nix-store-overlay";
       internal = true;
     };
+
+    sandbox = lib.mkOption {
+      type = lib.types.package;
+      internal = true;
+    };
   };
 }
