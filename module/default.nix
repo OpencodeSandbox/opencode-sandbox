@@ -34,6 +34,18 @@
     mkdir "$sandbox"
     cp -r -- ./!("$sandbox") "$sandbox"
 
+
+    # Sandbox agent is given its own remote repository. All other remotes are
+    # removed to discourage an invalid push
+
+    echo -e "''${GREEN}Initializing sandbox remote''${RESET}"
+
+    remote_name=${config.opencode-sandbox.git.remote.name}
+    remote_url=${config.opencode-sandbox.git.remote.url}
+
+    $(cd "$sandbox" && git remote | xargs -n1 git remote remove)
+    $(cd "$sandbox" && git remote add "$remote_name" "$remote_url")
+
     # Sandbox agents are given a new, random branch to work with. The default
     # branch is removed in the sandbox to discourage switching back to it.
 

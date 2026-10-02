@@ -17,6 +17,7 @@
       # The sandbox re-uses the same environment as the main dev shell
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
+          git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
           extraEnv = [devenv];
         };
       };

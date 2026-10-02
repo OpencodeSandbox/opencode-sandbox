@@ -15,9 +15,12 @@
     packages.${system} = rec {
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
+          git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+
+          opencode.config = ./opencode.jsonc;
+
           forwardPorts = [8888];
           extraEnv = with pkgs; [nil alejandra];
-          opencode.config = ./opencode.jsonc;
         };
       };
 
