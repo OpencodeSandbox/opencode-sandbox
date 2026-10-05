@@ -5,19 +5,6 @@
   ...
 }: {
   options.opencode-sandbox = {
-    storeSize = lib.mkOption {
-      description = ''
-        Host storage reserved for the sandbox's nix store in megabytes.
-
-        Data stored here is not persisted and is wiped on shutdown and restart.
-        Make sure to set a high enough limit in accordance to your use case as
-        nix evaluation will fail if the store is full.
-      '';
-
-      type = lib.types.ints.unsigned;
-      default = 32768;
-    };
-
     forwardPorts = lib.mkOption {
       description = ''
         Ports to forward for sandbox-to-host communication.
@@ -26,6 +13,9 @@
         inference server which would be too impractical to run inside of a
         sandboxed environment. Special care should be taken when using this
         option not to expose any sensitive or privileged services.
+
+        When port forwarding is active, **ports will be made available inside of
+        the sandbox at address 10.0.2.10**.
       '';
 
       type = lib.types.listOf lib.types.ints.u16;
@@ -79,7 +69,7 @@
         options = {
           mem = lib.mkOption {
             description = ''
-              Amount of RAM made available to the sandbox in megabytes.
+              Amount of RAM made available to the sandbox, in megabytes.
 
               Setting the limit too low won't cause the sandbox to crash but might
               result in certain processes being unexpectedly terminated.
@@ -96,6 +86,19 @@
 
             type = lib.types.ints.unsigned;
             default = 4;
+          };
+
+          store = lib.mkOption {
+            description = ''
+              Host storage reserved for the sandbox's nix store, in megabytes.
+
+              Data stored here is not persisted and is wiped on shutdown and restart.
+              Make sure to set a high enough limit in accordance to your use case as
+              nix evaluation will fail if the store is full.
+            '';
+
+            type = lib.types.ints.unsigned;
+            default = 32768;
           };
         };
       };
@@ -120,11 +123,6 @@
           config = lib.mkOption {
             description = ''
               Opencode configuration, either as a path to a file or as raw JSON/JSONC.
-
-              When set, the configuration is written to `opencode.jsonc` in the shared
-              work directory before opencode starts and removed again once it exits.
-              Any pre-existing `opencode.jsonc` or `opencode.json` is backed up first
-              and restored afterwards, so user configurations are never modified.
             '';
             example = ''
               {
@@ -186,7 +184,7 @@
               options = {
                 enabled = lib.mkOption {
                   description = ''
-                    Whethere or not to configure git authentication.
+                    Whether or not to configure git authentication.
 
                     Keep in mind that if the agent has access to the required
                     tokens as part of the project `.env` it will still be able
@@ -225,6 +223,37 @@
                     host=github.com
                     username=x-access-token
                     password=${"$"}${config.opencode-sandbox.git.auth.token}'';
+                };
+              };
+            };
+          };
+
+          shutdown = lib.mkOption {
+            description = ''
+              Git commands to run on sandbox shutdown after having closed
+              Opencode.
+            '';
+
+            type = lib.types.submodule {
+              options = {
+                pushOnExit = lib.mkOption {
+                  description = ''
+                    Whether to commit and push any local changes to remote on shutdown.
+
+                    If this option is set to false, any uncommited changes will NOT be persisted.
+                  '';
+
+                  type = lib.types.bool;
+                  default = true;
+                };
+
+                message = lib.mkOption {
+                  description = ''
+                    Default commit message used if `pushOnExit` is enabled.
+                  '';
+
+                  type = lib.types.str;
+                  default = "chore(opencode-sandbox): shutting down, persisting state";
                 };
               };
             };

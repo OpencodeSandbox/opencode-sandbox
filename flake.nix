@@ -35,5 +35,11 @@
 
       default = sandbox;
     });
+
+    devShells = util.forEachSystem ({pkgs, ...}: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [mdbook];
+      };
+    });
   };
 }

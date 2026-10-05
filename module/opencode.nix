@@ -59,6 +59,19 @@ in {
 
       ${lib.getExe cfg.opencode.package}
 
+      if [ "${lib.boolToString cfg.git.shutdown.pushOnExit}" == "true" ]; then
+        # 1. Uncommitted changes?
+        if [ -n "$(git status --porcelain)" ]; then
+          git add .;
+          git commit -m "${cfg.git.shutdown.message}"
+        fi
+
+        # 2. Unpushed commits on current branch?
+        if [ "$(git rev-list --count '@{u}..HEAD')" -gt 0 ]; then
+          git push
+        fi
+      fi
+
       if [ $? -eq 0 ]; then
         sudo poweroff
       fi

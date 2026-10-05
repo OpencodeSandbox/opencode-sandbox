@@ -55,6 +55,7 @@
     branch_new="sandbox-$(${lib.getExe pkgs.openssl} rand -hex 4)"
     $(cd "$sandbox" && git switch -c "$branch_new")
     $(cd "$sandbox" && git branch -D "$branch_pre")
+    $(cd "$sandbox" && git branch --set-upstream-to="$remote_name/$branch_new" "$branch_new")
 
     echo -e "''${GREEN}Launching VM''${RESET}"
 

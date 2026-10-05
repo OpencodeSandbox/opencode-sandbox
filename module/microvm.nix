@@ -36,7 +36,7 @@
     {
       image = "${config.opencode-sandbox.volumeName}.img";
       mountPoint = config.microvm.writableStoreOverlay;
-      size = config.opencode-sandbox.storeSize;
+      size = config.opencode-sandbox.limits.store;
     }
   ];
 }

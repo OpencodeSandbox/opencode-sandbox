@@ -1,0 +1,84 @@
+# Installation
+
+Opencode Sandbox is available as both a _flake package_ and _nixos module_. Start by adding it to
+your flake inputs:
+
+```nix
+{
+  inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
+  # Add this to your flake inputs
+  inputs.opencode-sandbox.url = "github:trantorian1/opencode-sandbox";
+  inputs.opencode-sandbox.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = {nixpkgs, opencode-sandbox, ...}: {
+    # ...
+  }
+}
+```
+
+## Flake package
+
+The project flake exposes a `sandbox` package which you can use directly to configure your own
+virtual environments. See the [options reference](./options.md) for a list of all configuration
+options.
+
+> [!NOTE]
+> The `sandbox` package requires you to specify `git.remote.url` in order to work. **Set this to the
+> remote url you want your agent to use when calling `git push`**.
+
+```nix
+  outputs = {
+    nixpkgs,
+    opencode-sandbox,
+    ...
+  }: let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
+    packages.${system} = rec {
+      sandbox = opencode-sandbox.packages.${system}.sandbox.override {
+        opencode-sandbox = {
+          # REQUIRED: the origin used by your agent when calling `git push`
+          git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+        };
+      };
+    };
+  };
+```
+
+## NixOS Module
+
+Alternatively, Opencode Sandbox also exposes a NixOS module which you can use to invoke `sandbox`
+declaratively.
+
+> [!WARNING]
+> It is recommended to use the `sandbox` flake package instead. The NixOS module is mostly intended
+> for internal configuration but might be useful in some advanced declarative setups. Only reach for
+> it if your use case is not already satisfied by the `sandbox` package.
+
+```nix
+  outputs = {
+    nixpkgs,
+    opencode-sandbox,
+    ...
+  }: let
+    system = "x86_64-linux";
+  in {
+    nixosConfigurations.sandbox = nixpkgs.lib.nixosSystem {
+      inherit system;
+
+      modules = [
+        ({config, ...}: {
+          opencode-sandbox = {
+            git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+          }
+
+          environment.systemPackages = [
+            opencode-sandbox.sandbox
+          ];
+        })
+      ]
+    };
+  }
+```
