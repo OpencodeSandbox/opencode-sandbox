@@ -12,7 +12,7 @@ following to your `flake.nix`:
 ```nix
 sandbox = opencode-sandbox.packages.${system}.sandbox.override {
   opencode-sandbox = {
-    git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+    git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
   
     # Required to access the unsloth server running on the host
     # By default Unsloth server and Unsloth desktop expose their API on port 8888

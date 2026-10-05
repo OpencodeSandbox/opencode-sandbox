@@ -29,7 +29,7 @@ options.
   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
   # Step 1: add opencode-sandbox to your flake inputs
-  inputs.opencode-sandbox.url = "github:trantorian1/opencode-sandbox";
+  inputs.opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox";
 
   outputs = {
     nixpkgs,
@@ -44,7 +44,7 @@ options.
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         # Step 3: configure opencode-sandbox with a remote url and custom env
         opencode-sandbox = {
-          git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+          git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
           env.extend = with pkgs; [nodejs prettier]
         };
       };
