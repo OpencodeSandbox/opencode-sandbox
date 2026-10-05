@@ -1,15 +1,16 @@
 # Installation
 
+> [!CAUTION]
+> It is recommended NOT to override `opencode-sandbox`'s `nixpkgs` input as this can lead to using
+> an out-of-date or dysfunctional version of Opencode inside the sandbox.
+
 Opencode Sandbox is available as both a _flake package_ and _nixos module_. Start by adding it to
 your flake inputs:
 
 ```nix
 {
-  inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-
   # Add this to your flake inputs
   inputs.opencode-sandbox.url = "github:trantorian1/opencode-sandbox";
-  inputs.opencode-sandbox.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {nixpkgs, opencode-sandbox, ...}: {
     # ...

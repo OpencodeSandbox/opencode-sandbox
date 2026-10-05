@@ -30,7 +30,6 @@ options.
 
   # Step 1: add opencode-sandbox to your flake inputs
   inputs.opencode-sandbox.url = "github:trantorian1/opencode-sandbox";
-  inputs.opencode-sandbox.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
     nixpkgs,

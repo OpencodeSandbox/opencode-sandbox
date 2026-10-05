@@ -2,7 +2,6 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
   inputs.opencode-sandbox.url = "path:../../.";
-  inputs.opencode-sandbox.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = {
     self,
