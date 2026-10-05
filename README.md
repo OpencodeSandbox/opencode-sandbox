@@ -6,16 +6,16 @@ under the hood for declarative VM management.
 New sandboxes are configured using the [nix] programming language, allowing you to bundle in any
 arbitrary dependency you might need for development.
 
+> [!TIP]
+> Check out the [docs] for more information and an extended setup guide.
+
 ## Getting started
 
 Simply add `opencode-sandbox` to your flake inputs:
 
 ```nix
 {
-  inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-
-  inputs.opencode-sandbox.url = "path:../../.";
-  inputs.opencode-sandbox.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox";
 
   outputs = {nixpkgs, opencode-sandbox, ...}: {
     # ...
@@ -24,6 +24,10 @@ Simply add `opencode-sandbox` to your flake inputs:
 ```
 
 From there you can configure your own sandbox environments by overriding the `sandbox` package:
+
+> [!NOTE]
+> The `sandbox` package requires you to specify `git.remote.url` in order to work. **Set this to the
+> remote url you want your agent to use when calling `git push`**.
 
 ```nix
   outputs = {
@@ -37,7 +41,8 @@ From there you can configure your own sandbox environments by overriding the `sa
     packages.${system} = rec {
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
-          extraEnv = with pkgs; [nodejs prettier];
+          git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
+          env.extend = with pkgs; [nodejs prettier];
         };
       };
     };
@@ -55,5 +60,6 @@ nix run ./examples/shared-env
 [qemu]: https://www.qemu.org/
 [opencode]: https://opencode.ai/
 [microvm.nix]: https://github.com/microvm-nix/microvm.nix
+[docs]: https://opencodesandbox.github.io/opencode-sandbox/
 [nix]: https://nixos.org/
 [opencode docs]: https://opencode.ai/v2/docs

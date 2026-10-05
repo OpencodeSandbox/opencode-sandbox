@@ -10,7 +10,7 @@ your flake inputs:
 ```nix
 {
   # Add this to your flake inputs
-  inputs.opencode-sandbox.url = "github:trantorian1/opencode-sandbox";
+  inputs.opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox";
 
   outputs = {nixpkgs, opencode-sandbox, ...}: {
     # ...
@@ -41,7 +41,7 @@ options.
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
           # REQUIRED: the origin used by your agent when calling `git push`
-          git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+          git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
         };
       };
     };
@@ -72,7 +72,7 @@ declaratively.
       modules = [
         ({config, ...}: {
           opencode-sandbox = {
-            git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+            git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
           }
 
           environment.systemPackages = [
