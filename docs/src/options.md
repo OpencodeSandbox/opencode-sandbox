@@ -142,7 +142,7 @@ Remote repository url.
 
 ```nix
 opencode-sandbox = {
-  git.remote.url = https://github.com/Trantorian1/opencode-sandbox.git;
+  git.remote.url = https://github.com/OpencodeSandbox/opencode-sandbox.git;
 };
 ```
 
