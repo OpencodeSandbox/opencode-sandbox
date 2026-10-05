@@ -156,7 +156,7 @@
                   '';
 
                   type = lib.types.str;
-                  example = "https://github.com/Trantorian1/opencode-sandbox.git";
+                  example = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
                 };
 
                 name = lib.mkOption {

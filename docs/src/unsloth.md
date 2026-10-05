@@ -62,6 +62,6 @@ following to your root-level `opencode.jsonc`.
 }
 ```
 
-[`examples/unsloth-desktop`]: https://github.com/Trantorian1/opencode-sandbox/tree/934fd9a34d8b9990c1edd64ac0609f90eb7a0c7a/examples/unsloth-desktop
+[`examples/unsloth-desktop`]: https://github.com/OpencodeSandbox/opencode-sandbox/tree/7433ac4c2953f350dcd8cd8a217bc1e2545d62b4/examples/unsloth-desktop
 [Unsloth Desktop]: https://unsloth.ai/docs/desktop
 [host port forwarding]: ./options.md#forwardports
