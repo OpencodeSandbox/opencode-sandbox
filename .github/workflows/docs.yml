@@ -1,0 +1,56 @@
+name: docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        run: |
+          curl --proto '=https' --tlsv1.2 -fsSL https://nixos.org/nix/install -o nix-install.sh
+          echo "experimental-features = nix-command flakes" > nix.conf
+          sh nix-install.sh --no-daemon --yes --no-channel-add --nix-extra-conf-file nix.conf
+
+      - name: Add Nix to PATH
+        run: echo "$HOME/.nix-profile/bin" >> "$GITHUB_PATH"
+
+      - name: Generate module options
+        run: nix build .#docs && cp result ./docs/src/options.md
+
+      - name: Build documentation
+        run: nix run nixpkgs#mdbook -- build docs
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/book
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
