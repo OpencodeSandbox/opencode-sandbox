@@ -59,20 +59,22 @@ in {
 
       ${lib.getExe cfg.opencode.package}
 
+      status=0
+
       if [ "${lib.boolToString cfg.git.shutdown.pushOnExit}" == "true" ]; then
         # 1. Uncommitted changes?
         if [ -n "$(git status --porcelain)" ]; then
           git add .;
-          git commit -m "${cfg.git.shutdown.message}"
+          git commit -m "${cfg.git.shutdown.message}" || status=$?
         fi
 
-        # 2. Unpushed commits on current branch?
-        if [ "$(git rev-list --count '@{u}..HEAD')" -gt 0 ]; then
-          git push
-        fi
+        # 2. Push current branch to the configured remote. `@{u}` cannot be
+        # used here: the sandbox branch's upstream ref does not exist until
+        # the first push.
+        git push "${cfg.git.remote.name}" HEAD || status=$?
       fi
 
-      if [ $? -eq 0 ]; then
+      if [ "$status" -eq 0 ]; then
         sudo poweroff
       fi
     '';
