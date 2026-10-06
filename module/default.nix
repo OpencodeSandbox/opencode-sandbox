@@ -63,6 +63,13 @@
     $(cd "$sandbox" && git branch -D "$branch_pre")
     $(cd "$sandbox" && git branch --set-upstream-to="$remote_name/$branch_new" "$branch_new")
 
+    if [ "${lib.boolToString config.opencode-sandbox.git.withLocalChanges}" == "false" ]; then
+      echo -e "''${GREEN}Removing local changes''${RESET}"
+
+      $(cd "$sandbox" && git clean -df)
+      $(cd "$sandbox" && git reset --hard HEAD~1)
+    fi
+
     echo -e "''${GREEN}Launching VM''${RESET}"
 
     ${lib.getExe config.microvm.declaredRunner}

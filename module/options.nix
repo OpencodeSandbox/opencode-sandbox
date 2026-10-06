@@ -143,6 +143,19 @@
 
       type = lib.types.submodule {
         options = {
+          withLocalChanges = lib.mkOption {
+            description = ''
+              Whether or not to include local changes in the sandbox state.
+
+              Keep in mind that using this option in combination with
+              [`git.shutdown.pushOnExit`](./options.md#gitshutdownpushonexit)
+              will result in any local changes also being pushed on VM shutdown!
+            '';
+
+            type = lib.types.bool;
+            default = false;
+          };
+
           remote = lib.mkOption {
             description = ''
               Remote repository configuration options.
