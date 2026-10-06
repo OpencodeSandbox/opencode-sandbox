@@ -20,4 +20,4 @@
     ];
   };
 in
-  configuration.config.opencode-sandbox.sandbox
+  configuration.config.opencode-sandbox.sandbox.package

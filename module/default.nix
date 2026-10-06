@@ -12,7 +12,7 @@
 
   nix.settings.experimental-features = lib.mkDefault ["nix-command" "flakes"];
 
-  opencode-sandbox.sandbox = pkgs.writeShellScriptBin "sandbox" ''
+  opencode-sandbox.sandbox.package = pkgs.writeShellScriptBin "sandbox" ''
     RED="\e[3;31m"
     GREEN="\e[3;32m"
     RESET="\e[0m"
@@ -28,7 +28,7 @@
     # able to clean up during the previous run.
 
     cleanup() {
-      rm -rf "${config.opencode-sandbox.volumeName}.img"
+      rm -rf "${config.opencode-sandbox.volume.path}"
       rm -rf "$sandbox"
       rm -rf nixos.sock
     }
