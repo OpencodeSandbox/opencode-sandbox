@@ -257,7 +257,7 @@
                   '';
 
                   type = lib.types.bool;
-                  default = true;
+                  default = false;
                 };
 
                 message = lib.mkOption {
