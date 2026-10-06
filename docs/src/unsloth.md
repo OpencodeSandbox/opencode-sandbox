@@ -4,7 +4,7 @@
 > An example of how to set up Opencode to connect to a locally running [Unsloth Desktop] session
 > can be found under [`examples/unsloth-desktop`]
 
-## Sandbox
+## Setting up the Sandbox
 
 Opencode Sandbox supports connecting to local API providers via [host port forwarding]. Add the
 following to your `flake.nix`:
@@ -25,11 +25,11 @@ Then, from your local Unsloth desktop UI, head over to `Settings -> API -> Creat
 to save the resulting key and add it to your `.env`:
 
 ```bash
-UNSLOTH_API_KEY=skl-unsloth-123
+UNSLOTH_API_KEY=skl-unsloth-xxx
 ```
 
 
-## Opencode
+## Setting up Opencode
 
 Additionally, Opencode has to be configured to use whichever model you are running locally. Add the
 following to your root-level `opencode.jsonc`.
@@ -62,6 +62,6 @@ following to your root-level `opencode.jsonc`.
 }
 ```
 
-[`examples/unsloth-desktop`]: https://github.com/OpencodeSandbox/opencode-sandbox/tree/7433ac4c2953f350dcd8cd8a217bc1e2545d62b4/examples/unsloth-desktop
+[`examples/unsloth-desktop`]: https://github.com/OpencodeSandbox/opencode-sandbox/tree/main/examples/unsloth-desktop
 [Unsloth Desktop]: https://unsloth.ai/docs/desktop
 [host port forwarding]: ./options.md#forwardports

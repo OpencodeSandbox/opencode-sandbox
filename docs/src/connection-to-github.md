@@ -20,7 +20,7 @@ repository.
 > [`git.auth.token`] option (defaults to `GH_TOKEN`).
 
 ```bash
-GH_TOKEN=github_pat_123
+GH_TOKEN=github_pat_xxx
 ```
 
 [PAT creation page]: https://github.com/settings/personal-access-tokens/new
