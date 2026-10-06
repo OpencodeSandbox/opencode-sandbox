@@ -76,7 +76,9 @@ declaratively.
           }
 
           environment.systemPackages = [
-            opencode-sandbox.sandbox
+            # Note that the relevant NixOS module option is `sandbox.package`, while the flake
+            # output is just `sandbox`
+            opencode-sandbox.sandbox.package
           ];
         })
       ]

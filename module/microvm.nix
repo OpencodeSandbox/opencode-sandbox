@@ -34,7 +34,7 @@
   microvm.writableStoreOverlay = "/nix/.rw-store";
   microvm.volumes = [
     {
-      image = "${config.opencode-sandbox.volumeName}.img";
+      image = config.opencode-sandbox.volume.path;
       mountPoint = config.microvm.writableStoreOverlay;
       size = config.opencode-sandbox.limits.store;
     }

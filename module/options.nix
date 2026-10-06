@@ -244,7 +244,7 @@
                   '';
 
                   type = lib.types.bool;
-                  default = true;
+                  default = false;
                 };
 
                 message = lib.mkOption {
@@ -295,15 +295,98 @@
       };
     };
 
-    volumeName = lib.mkOption {
-      type = lib.types.str;
-      default = "nix-store-overlay";
-      internal = true;
+    volume = lib.mkOption {
+      description = ''
+        Nix store overlay volume configuration.
+
+        Opencode Sandbox uses a QEMU volume to provide the VM with a writable nix store.
+      '';
+
+      type = lib.types.submodule {
+        options = {
+          dir = lib.mkOption {
+            description = ''
+              Where to store the nix store volume.
+            '';
+
+            type = lib.types.str;
+            default = "./";
+          };
+
+          name = lib.mkOption {
+            description = ''
+              Nix store volume name.
+
+              Will have `.img` appended at the end. The full volume path is:
+
+              ```nix
+              "''${config.opencode-sandbox.volume.dir}/''${config.opencode-sandbox.volume.name}.img"
+              ```
+            '';
+
+            type = lib.types.str;
+            default = "nix-store-overlay";
+          };
+
+          path = lib.mkOption {
+            internal = true;
+
+            type = lib.types.str;
+            default = "${config.opencode-sandbox.volume.dir}/${config.opencode-sandbox.volume.name}.img";
+          };
+        };
+      };
     };
 
     sandbox = lib.mkOption {
-      type = lib.types.package;
-      internal = true;
+      description = ''
+        Sandbox folder configuration.
+
+        By default, any files the sandbox has access to are stored in a local
+        folder `.sandbox` under the current working directory.
+      '';
+
+      type = lib.types.submodule {
+        options = {
+          dir = lib.mkOption {
+            description = ''
+              Where to store the sandbox folder.
+            '';
+
+            type = lib.default.str;
+            default = "./";
+          };
+
+          name = lib.mkOption {
+            description = ''
+              Sandbox folder name.
+
+              The full sandbox path is"
+
+              ```nix
+              "''${config.opencode-sandbox.sandbox.dir}/''${config.opencode-sandbox.sandbox.name}"
+              ```
+              "
+            '';
+
+            type = lib.types.str;
+            default = ".sandbox";
+          };
+
+          path = lib.mkOption {
+            internal = true;
+
+            type = lib.type.str;
+            default = "${config.opencode-sandbox.sandbox.dir}/${config.opencode-sandbox.sandbox.name}";
+          };
+
+          package = lib.mkOption {
+            internal = true;
+
+            type = lib.types.package;
+          };
+        };
+      };
     };
   };
 }
