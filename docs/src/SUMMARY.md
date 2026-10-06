@@ -11,7 +11,7 @@
 # Integrations
 
 - [Connecting to Github](./connection-to-github.md)
-- [Connecting to Anthropic]()
+- [Connecting to Anthropic](./anthropic.md)
 - [Connecting to OpenAI]()
 - [Connecting to Unsloth Desktop](./unsloth.md)
 
