@@ -27,8 +27,14 @@
     # Sandbox state is cleaned up both on start and shutdown in case we weren't
     # able to clean up during the previous run.
 
-    rm -f ${config.opencode-sandbox.volumeName}.img
-    rm -rf "$sandbox"
+    cleanup() {
+      rm -rf "${config.opencode-sandbox.volumeName}.img"
+      rm -rf "$sandbox"
+      rm -rf nixos.sock
+    }
+
+    cleanup
+    trap cleanup EXIT
 
     echo -e "''${GREEN}Creating sandbox''${RESET}"
     mkdir "$sandbox"
@@ -61,12 +67,13 @@
 
     ${lib.getExe config.microvm.declaredRunner}
 
-    # Code written by the agent only exists for the duration of the session and
-    # is rm'd on exit.
+    # Any code written by the agent only exists for the duration of the session
+    # and is rm'd on exit.
 
     echo -e "''${RED}Removing sandbox state''${RESET}"
 
-    rm -f ${config.opencode-sandbox.volumeName}.img
-    rm -rf "$sandbox"
+    cleanup
+
+    trap - EXIT
   '';
 }
