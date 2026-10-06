@@ -1,0 +1,31 @@
+name: docs-update
+on:
+  pull_request:
+permissions:
+  contents: write
+concurrency:
+  group: docs-update-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate module options
+        run: nix build .#docs && cp result ./docs/src/options.md
+      - name: Commit regenerated options
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet docs/src/options.md; then
+            git add docs/src/options.md
+            git commit -m "docs(options): regenerate options reference"
+            git push origin HEAD:refs/heads/${GITHUB_HEAD_REF}
+          fi
