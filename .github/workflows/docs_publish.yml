@@ -1,4 +1,4 @@
-name: docs
+name: docs-publish
 on:
   push:
     branches: [main]
@@ -20,8 +20,6 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Generate module options
-        run: nix build .#docs && cp result ./docs/src/options.md
       - name: Build documentation
         run: nix run nixpkgs#mdbook -- build docs
       - name: Setup Pages
