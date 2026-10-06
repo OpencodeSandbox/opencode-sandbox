@@ -244,7 +244,7 @@
                   '';
 
                   type = lib.types.bool;
-                  default = false;
+                  default = true;
                 };
 
                 message = lib.mkOption {
