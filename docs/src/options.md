@@ -263,3 +263,65 @@ _type_: `package`
 _default_: `pkgs.opencode`
 
 Opencode package in use inside of the sandbox.
+
+## `sandbox`
+
+_type_: `submodule`
+
+Sandbox folder configuration.
+
+By default, any files the sandbox has access to are stored in a local
+folder `.sandbox` under the current working directory.
+
+## `sandbox.dir`
+
+_type_: `string`
+
+_default_: `./`
+
+Where to store the sandbox folder.
+
+## `sandbox.name`
+
+_type_: `string`
+
+_default_: `.sandbox`
+
+Sandbox folder name.
+
+The full sandbox path is"
+
+```nix
+"${config.opencode-sandbox.sandbox.dir}/${config.opencode-sandbox.sandbox.name}"
+```
+"
+
+## `volume`
+
+_type_: `submodule`
+
+Nix store overlay volume configuration.
+
+Opencode Sandbox uses a QEMU volume to provide the VM with a writable nix store.
+
+## `volume.dir`
+
+_type_: `string`
+
+_default_: `./`
+
+Where to store the nix store volume.
+
+## `volume.name`
+
+_type_: `string`
+
+_default_: `nix-store-overlay`
+
+Nix store volume name.
+
+Will have `.img` appended at the end. The full volume path is:
+
+```nix
+"${config.opencode-sandbox.volume.dir}/${config.opencode-sandbox.volume.name}.img"
+```
