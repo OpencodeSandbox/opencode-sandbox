@@ -67,7 +67,7 @@
       echo -e "''${GREEN}Removing local changes''${RESET}"
 
       $(cd "$sandbox" && git clean -df)
-      $(cd "$sandbox" && git reset --hard HEAD~1)
+      $(cd "$sandbox" && git reset --hard HEAD)
     fi
 
     echo -e "''${GREEN}Launching VM''${RESET}"
