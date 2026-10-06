@@ -353,7 +353,7 @@
               Where to store the sandbox folder.
             '';
 
-            type = lib.default.str;
+            type = lib.types.str;
             default = "./";
           };
 
@@ -376,7 +376,7 @@
           path = lib.mkOption {
             internal = true;
 
-            type = lib.type.str;
+            type = lib.types.str;
             default = "${config.opencode-sandbox.sandbox.dir}/${config.opencode-sandbox.sandbox.name}";
           };
 
