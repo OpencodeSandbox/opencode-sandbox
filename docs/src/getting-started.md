@@ -9,15 +9,15 @@
 Opencode Sandbox is configured via overrides on the `sandbox` package. Some common configuration
 options include:
 
-| Name | Usage |
-|-|-|
-|[`git.remote.url`]| Specifies the remote your agent will use for `git` commands |
-|[`git.shutdown.pushOnExit`]| Stages, commits and pushes any leftover local changes on shutdown |
-|[`env.extend`]| Allows you to add new packages to your agent's sandbox runtime environment|
-|[`limits.mem`]| Amount of RAM made available to the sandbox in megabytes. |
-|[`limits.vcpu`]| Number of virtual CPU cores made available to the sandbox. |
-|[`limits.store`]| Host storage reserved for the sandbox’s nix store, in megabytes. |
-|[`opencode.config`]| Opencode configuration, either as a path to a file or as raw JSON/JSONC. |
+| Name                        | Usage                                                                        |
+|-----------------------------|------------------------------------------------------------------------------|
+| [`git.remote.url`]          | Specifies the remote your agent will use for `git` commands                  |
+| [`git.shutdown.pushOnExit`] | Stages, commits and pushes any leftover local changes on shutdown            |
+| [`env.extend`]              | Allows you to add new packages to your agent's sandbox runtime environment   |
+| [`limits.mem`]              | Amount of RAM made available to the sandbox in megabytes.                    |
+| [`limits.vcpu`]             | Number of virtual CPU cores made available to the sandbox.                   |
+| [`limits.store`]            | Host storage reserved for the sandbox’s nix store, in megabytes.             |
+| [`opencode.config`]         | Opencode configuration, either as a path to a file or as raw JSON/JSONC.     |
 
 See the [options reference](./options.md) for a list of all configuration
 options.
@@ -56,6 +56,7 @@ options.
   };
 }
 ```
+
 </details>
 
 ## Environment values

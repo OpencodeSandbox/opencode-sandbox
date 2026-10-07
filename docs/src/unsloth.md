@@ -28,7 +28,6 @@ to save the resulting key and add it to your `.env`:
 UNSLOTH_API_KEY=skl-unsloth-xxx
 ```
 
-
 ## Setting up Opencode
 
 Additionally, Opencode has to be configured to use whichever model you are running locally. Add the

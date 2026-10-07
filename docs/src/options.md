@@ -1,3 +1,5 @@
+# Option reference
+
 ## `env`
 
 _type_: `submodule`
@@ -82,7 +84,8 @@ By default this is setup for use with github.
 _type_: `strings concatenated with "\n"`
 
 _default_:
-```
+
+```ini
 protocol=https
 host=github.com
 username=x-access-token
@@ -175,7 +178,7 @@ _default_: `false`
 Whether to commit and push any local changes to remote on
 shutdown.
 
-If this option is set to false, any uncommited changes will
+If this option is set to false, any uncommitted changes will
 NOT be persisted.
 
 ## `git.user`
@@ -187,7 +190,7 @@ The agent's git user.
 By default this is set to point to the [OpencodeSandbox] github
 account.
 
-[OpencodeSandbox]: (https://github.com/OpencodeSandbox)
+[OpencodeSandbox]: https://github.com/OpencodeSandbox
 
 ## `git.user.email`
 
@@ -313,12 +316,11 @@ _default_: `.sandbox`
 
 Sandbox folder name.
 
-The full sandbox path is"
+The full sandbox path is:
 
 ```nix
 "${config.opencode-sandbox.sandbox.dir}/${config.opencode-sandbox.sandbox.name}"
 ```
-"
 
 ## `volume`
 

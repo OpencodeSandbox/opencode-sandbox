@@ -63,7 +63,8 @@
 
 
       _default_:
-      ```
+
+      ```ini
       ${default}
       ```''
     else ''
@@ -95,6 +96,8 @@
 
     ${info.description}${lib.optionalString (info ? example) (renderExample name info.example)}'';
 
-  md = lib.concatMapStringsSep "\n" (name: renderOption name options.${name}) (builtins.attrNames options);
+  md =
+    "# Option reference\n\n"
+    + lib.concatMapStringsSep "\n" (name: renderOption name options.${name}) (builtins.attrNames options);
 in
   pkgs.writeText "docs.md" md
