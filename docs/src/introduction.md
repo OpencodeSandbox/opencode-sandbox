@@ -20,7 +20,7 @@ focus on some small bug or feature while you work on another task.
 ## Limitations
 
 The sandbox can be configured to automatically push any uncommitted changes to remote on shutdown
-via the [`git.shutdown.pushOnExit`] option (disabled by default). Other than that, no files are ever
+via the [`git.shutdown.pushOnExit`] option (on by default). Other than that, no files are ever
 persisted on the host.
 
 > [!CAUTION]
