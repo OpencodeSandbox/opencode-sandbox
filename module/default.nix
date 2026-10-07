@@ -25,6 +25,11 @@
 
     sandbox=.sandbox
 
+    if [ -d "$sandbox" ]; then
+      echo -e "''${RED}Another sandbox is already running in the current directory, aborting''${RESET}"
+      exit 1
+    fi
+
     # Sandbox state is cleaned up both on start and shutdown in case we weren't
     # able to clean up during the previous run.
 
