@@ -57,9 +57,12 @@ declaratively.
 > It is recommended to use the `sandbox` flake package instead. The NixOS module is mostly intended
 > for internal configuration but might be useful in some advanced declarative setups. Only reach for
 > it if your use case is not already satisfied by the `sandbox` package.
+>
+> You can find an example of how to use the `sandbox` module under [`examples/nixos-module`].
 
 ```nix
   outputs = {
+    self,
     nixpkgs,
     opencode-sandbox,
     ...
@@ -70,18 +73,25 @@ declaratively.
       inherit system;
 
       modules = [
-        ({config, ...}: {
-          opencode-sandbox = {
-            git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
-          }
+        opencode-sandbox.nixosModules.sandbox
 
-          environment.systemPackages = [
-            # Note that the relevant NixOS module option is `sandbox.package`, while the flake
-            # output is just `sandbox`
-            opencode-sandbox.sandbox.package
-          ];
+        ({...}: {
+          # opencode-sandbox automatically configures the default login user
+          # and runs opencode on startup.
+          opencode-sandbox.git.remote.url = ''
+            https://github.com/OpencodeSandbox/opencode-sandbox.git
+          '';
         })
-      ]
+      ];
     };
-  }
+
+    packages.${system} = let
+      configuration = self.nixosConfigurations.sandbox.config;
+    in rec {
+      sandbox = configuration.opencode-sandbox.sandbox.package;
+      default = sandbox;
+    };
+  };
 ```
+
+[`examples/nixos-module`]: https://github.com/OpencodeSandbox/opencode-sandbox/tree/main/examples/nixos-module

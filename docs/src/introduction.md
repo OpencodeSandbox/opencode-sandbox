@@ -9,10 +9,13 @@ environment which is isolated from the host. It provides:
 - Automatic feature branch creation on startup
 - Support for locally run LLMS
 - Built-in github authentication
-- Access to virtualization tools such as Docker
 
-It is primarily intended for parallel development, where you have a local agent focus on some small
-bug or feature while you work on another branch.
+Beyond just isolating Opencode, running in a VM allows your agents to run their own virtual
+environments: Opencode Sandbox agents can spawn and test their own VMs or docker containers, all
+without ever having to interact with the host.
+
+This kind of harness is primarily intended for parallel development, where you have a local agent
+focus on some small bug or feature while you work on another branch.
 
 ## Limitations
 

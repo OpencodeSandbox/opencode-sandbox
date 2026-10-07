@@ -86,8 +86,8 @@ a sandboxed environment. To disable this, add the following to your `opencode.js
 }
 ```
 
-Opencode Sandbox uses the latest stable version of Opencode, which as of the time of writing is
-`1.18.33`. For more info on how to configure Opencode, check its [v1 docs](https://opencode.ai/docs).
+Opencode Sandbox uses the latest stable version of Opencode. For more info on how to configure
+Opencode, check its [v1 docs](https://opencode.ai/docs).
 
 ## Running Opencode Sandbox
 

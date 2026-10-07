@@ -62,4 +62,4 @@ nix run ./examples/shared-env
 [microvm.nix]: https://github.com/microvm-nix/microvm.nix
 [docs]: https://opencodesandbox.github.io/opencode-sandbox/
 [nix]: https://nixos.org/
-[opencode docs]: https://opencode.ai/v2/docs
+[opencode docs]: https://opencode.ai/docs

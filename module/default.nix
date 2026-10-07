@@ -1,10 +1,11 @@
-{
+{self, ...}: {
   pkgs,
   lib,
   config,
   ...
 }: {
   imports = [
+    self.nixosModules.microvm
     ./options.nix
     ./microvm.nix
     ./opencode.nix

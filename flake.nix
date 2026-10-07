@@ -21,7 +21,7 @@
 
     nixosModules = {
       inherit (microvm.nixosModules) microvm;
-      sandbox = import ./module;
+      sandbox = import ./module {inherit self;};
     };
 
     packages = util.forEachSystem ({
