@@ -196,6 +196,18 @@ _default_: `OpencodeSandbox`
 
 The agent's git username.
 
+## `git.withLocalChanges`
+
+_type_: `boolean`
+
+_default_: `false`
+
+Whether or not to include local changes in the sandbox state.
+
+Keep in mind that using this option in combination with
+[`git.shutdown.pushOnExit`](./options.md#gitshutdownpushonexit)
+will result in any local changes also being pushed on VM shutdown!
+
 ## `limits`
 
 _type_: `submodule`
