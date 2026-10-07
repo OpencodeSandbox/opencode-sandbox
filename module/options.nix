@@ -34,9 +34,11 @@
             description = ''
               Base packages which make up the agent's default set of tools.
 
-              When adding new tooling, it is preferable to edit `env.extend` instead.
-              Only edit `env.base` if you wish to _remove_ certain tools which you do
-              not want the agent to have access to.
+              When adding new tooling, it is preferable to edit [`env.extend`]
+              instead. Only edit this option if you wish to _remove_ certain
+              tools which you do not want the agent to have access to.
+
+              [`env.extend`]: ./options.md#envextend
             '';
 
             type = lib.types.listOf lib.types.package;
@@ -45,11 +47,12 @@
 
           extend = lib.mkOption {
             description = ''
-              Extra packages which are used to augment the agent's available tooling.
+              Extra packages which are used to augment the agent's available
+              tooling.
 
-              Use this to add project-specific tooling. It is generally a good idea to
-              have `env.extend` match your own development environment to make it easier
-              for you to apply the agent's changes on the host.
+              Use this to add project-specific tooling. It is generally a good
+              idea to have this option match your own development environment to
+              make it easier for you to apply the agent's changes on the host.
             '';
 
             type = lib.types.listOf lib.types.package;
@@ -148,8 +151,10 @@
               Whether or not to include local changes in the sandbox state.
 
               Keep in mind that using this option in combination with
-              [`git.shutdown.pushOnExit`](./options.md#gitshutdownpushonexit)
-              will result in any local changes also being pushed on VM shutdown!
+              [`git.shutdown.pushOnExit`] will result in any local changes also
+              being pushed on VM shutdown!
+
+              [`git.shutdown.pushOnExit`]: ./options.md#gitshutdownpushonexit
             '';
 
             type = lib.types.bool;
@@ -262,7 +267,9 @@
 
                 message = lib.mkOption {
                   description = ''
-                    Default commit message used if `pushOnExit` is enabled.
+                    Default commit message used if [`pushOnExit`] is enabled.
+
+                    [`pushOnExit`]: ./options.md#gitshutdownpushonexit
                   '';
 
                   type = lib.types.str;
@@ -276,8 +283,10 @@
             description = ''
               The agent's git user.
 
-              By default this is set to point to the [OpencodeSandbox](https://github.com/OpencodeSandbox)
-              github account.
+              By default this is set to point to the [OpencodeSandbox] github
+              account.
+
+              [OpencodeSandbox]: (https://github.com/OpencodeSandbox)
             '';
 
             type = lib.types.submodule {
