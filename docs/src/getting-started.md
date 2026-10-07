@@ -3,7 +3,7 @@
 > [!CAUTION]
 > **Closing Opencode inside the sandbox will terminate the VM and wipe all session storage!**
 > Changes are only pushed on shutdown if the [`git.shutdown.pushOnExit`] option is explicitly
-> enabled, which it is not by default. Remember to ask your agent to push any local changes before
+> enabled, _which it is not by default_. Remember to ask your agent to push any local changes before
 > exiting.
 
 Opencode Sandbox is configured via overrides on the `sandbox` package. Some common configuration
