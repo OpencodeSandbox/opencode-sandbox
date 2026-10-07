@@ -30,20 +30,33 @@
       system,
       ...
     }: rec {
+      # Base sandbox package, see `module` for options and package configuration
       sandbox = pkgs.callPackage ./sandbox.nix {inherit self nixpkgs;};
+
+      # Auto-generates module option documentation off `module/options.nix`
       docs = pkgs.callPackage ./docs {};
 
-      default = sandbox;
-    });
-
-    devShells = util.forEachSystem ({pkgs, ...}: {
-      default = pkgs.mkShell {
-        packages = with pkgs; [
+      # CI dependencies, can be installed with `nix profile install .#ci`
+      ci = pkgs.buildEnv {
+        name = "ci";
+        paths = with pkgs; [
           mdbook
           typos
           markdownlint-cli2
           lychee
         ];
+      };
+
+      default = sandbox;
+    });
+
+    devShells = util.forEachSystem ({
+      pkgs,
+      system,
+      ...
+    }: {
+      default = pkgs.mkShell {
+        packages = [self.packages.${system}.ci];
       };
     });
   };
