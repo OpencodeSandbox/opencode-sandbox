@@ -260,7 +260,7 @@
                     Whether to commit and push any local changes to remote on
                     shutdown.
 
-                    If this option is set to false, any uncommited changes will
+                    If this option is set to false, any uncommitted changes will
                     NOT be persisted.
                   '';
 
@@ -289,7 +289,7 @@
               By default this is set to point to the [OpencodeSandbox] github
               account.
 
-              [OpencodeSandbox]: (https://github.com/OpencodeSandbox)
+              [OpencodeSandbox]: https://github.com/OpencodeSandbox
             '';
 
             type = lib.types.submodule {
@@ -387,12 +387,11 @@
             description = ''
               Sandbox folder name.
 
-              The full sandbox path is"
+              The full sandbox path is:
 
               ```nix
               "''${config.opencode-sandbox.sandbox.dir}/''${config.opencode-sandbox.sandbox.name}"
               ```
-              "
             '';
 
             type = lib.types.str;

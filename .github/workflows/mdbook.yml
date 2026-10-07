@@ -1,0 +1,26 @@
+name: mdbook
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint docs
+        run: |
+          nix develop --command sh -c '
+            set -eu
+            typos docs/src
+            markdownlint-cli2 "docs/src/**/*.md"
+            mdbook build docs
+            # SUMMARY.md is skipped because its placeholder entry has an empty URL,
+            # which lychee cannot check or exclude on a per-link basis
+            lychee --no-progress --exclude-path "docs/src/SUMMARY.md" docs/src
+          '

@@ -38,7 +38,12 @@
 
     devShells = util.forEachSystem ({pkgs, ...}: {
       default = pkgs.mkShell {
-        packages = with pkgs; [mdbook];
+        packages = with pkgs; [
+          mdbook
+          typos
+          markdownlint-cli2
+          lychee
+        ];
       };
     });
   };
