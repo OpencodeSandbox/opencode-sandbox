@@ -87,7 +87,7 @@ a sandboxed environment. To disable this, add the following to your `opencode.js
 ```
 
 Opencode Sandbox uses the latest stable version of Opencode. For more info on how to configure
-Opencode, check its [v1 docs](https://opencode.ai/docs).
+Opencode, check its [v1 docs].
 
 ## Running Opencode Sandbox
 
@@ -109,3 +109,4 @@ To exit the sandbox, simply shutdown Opencode with `:q`.
 [`limits.store`]: ./options.md#limitsstore
 [`opencode.config`]: ./options.md#opencodeconfig
 [`opencode-sandbox.opencode.config`]: ./options.md#opencodeconfig
+[v1 docs]: https://opencode.ai/docs

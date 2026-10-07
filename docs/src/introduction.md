@@ -15,7 +15,7 @@ environments: Opencode Sandbox agents can spawn and test their own VMs or docker
 without ever having to interact with the host.
 
 This kind of harness is primarily intended for parallel development, where you have a local agent
-focus on some small bug or feature while you work on another branch.
+focus on some small bug or feature while you work on another task.
 
 ## Limitations
 
