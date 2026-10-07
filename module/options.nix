@@ -74,8 +74,8 @@
             description = ''
               Amount of RAM made available to the sandbox, in megabytes.
 
-              Setting the limit too low won't cause the sandbox to crash but might
-              result in certain processes being unexpectedly terminated.
+              Setting the limit too low won't cause the sandbox to crash but
+              might result in certain processes being unexpectedly terminated.
             '';
 
             type = lib.types.ints.unsigned;
@@ -95,9 +95,9 @@
             description = ''
               Host storage reserved for the sandbox's nix store, in megabytes.
 
-              Data stored here is not persisted and is wiped on shutdown and restart.
-              Make sure to set a high enough limit in accordance to your use case as
-              nix evaluation will fail if the store is full.
+              Data stored here is not persisted and is wiped on shutdown and
+              restart. Make sure to set a high enough limit in accordance to
+              your use case as nix evaluation will fail if the store is full.
             '';
 
             type = lib.types.ints.unsigned;
@@ -125,7 +125,8 @@
 
           config = lib.mkOption {
             description = ''
-              Opencode configuration, either as a path to a file or as raw JSON/JSONC.
+              Opencode configuration, either as a path to a file or as raw
+              JSON/JSONC.
             '';
             example = ''
               {
@@ -256,9 +257,11 @@
               options = {
                 pushOnExit = lib.mkOption {
                   description = ''
-                    Whether to commit and push any local changes to remote on shutdown.
+                    Whether to commit and push any local changes to remote on
+                    shutdown.
 
-                    If this option is set to false, any uncommited changes will NOT be persisted.
+                    If this option is set to false, any uncommited changes will
+                    NOT be persisted.
                   '';
 
                   type = lib.types.bool;
@@ -321,7 +324,8 @@
       description = ''
         Nix store overlay volume configuration.
 
-        Opencode Sandbox uses a QEMU volume to provide the VM with a writable nix store.
+        Opencode Sandbox uses a QEMU volume to provide the VM with a writable
+        nix store.
       '';
 
       type = lib.types.submodule {
