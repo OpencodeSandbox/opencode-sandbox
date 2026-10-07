@@ -13,8 +13,7 @@
 
 - [Connecting to Github](./connection-to-github.md)
 - [Connecting to Anthropic](./anthropic.md)
-<!-- markdownlint-disable-next-line MD042 -->
-- [Connecting to OpenAI]()
+<!-- [Connecting to OpenAI]() -->
 - [Connecting to Unsloth Desktop](./unsloth.md)
 
 # Reference guide
