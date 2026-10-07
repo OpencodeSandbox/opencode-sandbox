@@ -173,7 +173,7 @@ Default commit message used if [`pushOnExit`] is enabled.
 
 _type_: `boolean`
 
-_default_: `false`
+_default_: `true`
 
 Whether to commit and push any local changes to remote on
 shutdown.
