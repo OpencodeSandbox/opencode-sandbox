@@ -17,8 +17,8 @@ bug or feature while you work on another branch.
 ## Limitations
 
 The sandbox can be configured to automatically push any uncommitted changes to remote on shutdown
-via the [`git.shutdown.pushOnExit`] option, which is disabled by default. Other than that, no files
-are ever persisted on the host.
+via the [`git.shutdown.pushOnExit`] option (disabled by default). Other than that, no files are ever
+persisted on the host.
 
 > [!CAUTION]
 > Opencode Sandbox treats each agent's sessions as _ephemeral_. **Nothing** is persisted between
