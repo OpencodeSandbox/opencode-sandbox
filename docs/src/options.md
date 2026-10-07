@@ -172,9 +172,11 @@ _type_: `boolean`
 
 _default_: `false`
 
-Whether to commit and push any local changes to remote on shutdown.
+Whether to commit and push any local changes to remote on
+shutdown.
 
-If this option is set to false, any uncommited changes will NOT be persisted.
+If this option is set to false, any uncommited changes will
+NOT be persisted.
 
 ## `git.user`
 
@@ -231,8 +233,8 @@ _default_: `8192`
 
 Amount of RAM made available to the sandbox, in megabytes.
 
-Setting the limit too low won't cause the sandbox to crash but might
-result in certain processes being unexpectedly terminated.
+Setting the limit too low won't cause the sandbox to crash but
+might result in certain processes being unexpectedly terminated.
 
 ## `limits.store`
 
@@ -242,9 +244,9 @@ _default_: `32768`
 
 Host storage reserved for the sandbox's nix store, in megabytes.
 
-Data stored here is not persisted and is wiped on shutdown and restart.
-Make sure to set a high enough limit in accordance to your use case as
-nix evaluation will fail if the store is full.
+Data stored here is not persisted and is wiped on shutdown and
+restart. Make sure to set a high enough limit in accordance to
+your use case as nix evaluation will fail if the store is full.
 
 ## `limits.vcpu`
 
@@ -264,7 +266,8 @@ Opencode configuration options.
 
 _type_: `null or (string or absolute path convertible to it)`
 
-Opencode configuration, either as a path to a file or as raw JSON/JSONC.
+Opencode configuration, either as a path to a file or as raw
+JSON/JSONC.
 
 ### Example
 
@@ -323,7 +326,8 @@ _type_: `submodule`
 
 Nix store overlay volume configuration.
 
-Opencode Sandbox uses a QEMU volume to provide the VM with a writable nix store.
+Opencode Sandbox uses a QEMU volume to provide the VM with a writable
+nix store.
 
 ## `volume.dir`
 
