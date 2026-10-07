@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: nix profile install .#ci
       - name: Build documentation
-        run: mdbook -- build docs
+        run: mdbook build docs
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
