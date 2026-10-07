@@ -3,19 +3,20 @@
   nixpkgs,
   pkgs,
   lib,
-  system,
+  stdenv,
   opencode-sandbox ? {},
   ...
 }: let
   configuration = nixpkgs.lib.nixosSystem {
-    inherit system;
+    inherit (stdenv.hostPlatform) system;
 
     modules = [
       self.nixosModules.microvm
       self.nixosModules.sandbox
 
       ({...}: {
-        config.opencode-sandbox = opencode-sandbox;
+        opencode-sandbox = opencode-sandbox;
+        system.stateVersion = "26.11";
       })
     ];
   };

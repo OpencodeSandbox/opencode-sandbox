@@ -81,6 +81,8 @@ declaratively.
           opencode-sandbox.git.remote.url = ''
             https://github.com/OpencodeSandbox/opencode-sandbox.git
           '';
+
+          system.stateVersion = "26.11";
         })
       ];
     };
