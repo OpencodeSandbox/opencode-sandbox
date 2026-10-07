@@ -7,7 +7,7 @@
     packages.${system} = rec {
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
-          git.remote.url = "https://github.com/Trantorian1/opencode-sandbox.git";
+          git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
           opencode.config = ./opencode.jsonc;
         };
       };

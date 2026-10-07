@@ -5,19 +5,15 @@
 }: let
   cfg = config.opencode-sandbox;
 in {
-  services.getty.autologinUser = "user";
+  services.getty.autologinUser = lib.mkDefault "user";
   users.users.user = {
-    password = "";
     group = "user";
     isNormalUser = true;
     extraGroups = ["wheel"];
   };
   users.groups.user = {};
 
-  security.sudo = {
-    enable = true;
-    wheelNeedsPassword = false;
-  };
+  security.sudo.wheelNeedsPassword = false;
 
   environment.systemPackages = cfg.env.base ++ cfg.env.extend;
 
@@ -66,12 +62,10 @@ in {
         if [ -n "$(git status --porcelain)" ]; then
           git add .;
           git commit -m "${cfg.git.shutdown.message}" || status=$?
-        fi
 
-        # 2. Push current branch to the configured remote. `@{u}` cannot be
-        # used here: the sandbox branch's upstream ref does not exist until
-        # the first push.
-        git push "${cfg.git.remote.name}" HEAD || status=$?
+          # 2. Push current branch to the configured remote.
+          git push "${cfg.git.remote.name}" HEAD || status=$?
+        fi
       fi
 
       if [ "$status" -eq 0 ]; then
