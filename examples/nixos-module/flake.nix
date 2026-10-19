@@ -15,6 +15,7 @@
       inherit system;
 
       modules = [
+        opencode-sandbox.nixosModules.microvm
         opencode-sandbox.nixosModules.sandbox
 
         ({...}: {
