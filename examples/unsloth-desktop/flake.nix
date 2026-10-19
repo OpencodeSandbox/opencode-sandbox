@@ -15,6 +15,8 @@
       sandbox = opencode-sandbox.packages.${system}.sandbox.override {
         opencode-sandbox = {
           git.remote.url = "https://github.com/OpencodeSandbox/opencode-sandbox.git";
+          git.shutdown.pushOnExit = false;
+          git.withLocalChanges = true;
 
           forwardPorts = [8888];
           env.extend = with pkgs; [nil alejandra];
