@@ -3,43 +3,55 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixlib.url = "github:nix-util/nixlib";
 
     microvm.url = "github:microvm-nix/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    microvm,
-    ...
-  }: let
+  outputs = {nixlib, ...} @ inputs: let
     systems = ["x86_64-linux"];
-    util = import ./util.nix {inherit nixpkgs systems;};
+    util = nixlib.util {inherit systems inputs;};
   in {
     formatter = util.forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
-    nixosModules = {
-      inherit (microvm.nixosModules) microvm;
-      sandbox = import ./module {inherit self;};
-    };
+    nixosModules = util.forEachModule ({...}: {
+      sandbox = ./module;
+    });
 
     packages = util.forEachSystem ({
+      self,
+      system,
       pkgs,
       lib,
-      system,
+      libmodules,
+      libpkgs,
       ...
     }: rec {
       # Base sandbox package, see `module` for options and package configuration
-      sandbox = pkgs.callPackage ./sandbox.nix {inherit self nixpkgs;};
+      sandbox = libpkgs.mkOverride ({opencode-sandbox ? {}, ...}: (libmodules.build {
+        name = "opencode-sandbox.sandbox.package";
+
+        modules = [
+          self.nixosModules.microvm
+          self.nixosModules.sandbox
+
+          ({...}: {
+            inherit opencode-sandbox;
+            system.stateVersion = "26.11";
+          })
+        ];
+      }));
 
       # Auto-generates module option documentation off `module/options.nix`
-      docs = pkgs.callPackage ./docs {};
+      docs = libmodules.docs {
+        modules = lib.attrValues self.nixosModules;
+        name = "opencode-sandbox";
+      };
 
       # CI dependencies, can be installed with `nix profile install .#ci`
-      ci = pkgs.buildEnv {
-        name = "ci";
-        paths = with pkgs; [
+      ci = libpkgs.mkEnv {
+        packages = with pkgs; [
           mdbook
           typos
           markdownlint-cli2
@@ -51,12 +63,12 @@
     });
 
     devShells = util.forEachSystem ({
+      self,
       pkgs,
-      system,
       ...
     }: {
       default = pkgs.mkShell {
-        packages = [self.packages.${system}.ci];
+        packages = [self.packages.ci];
       };
     });
   };
