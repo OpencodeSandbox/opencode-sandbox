@@ -15,7 +15,10 @@ in {
 
   security.sudo.wheelNeedsPassword = false;
 
-  environment.systemPackages = cfg.env.base ++ cfg.env.extend;
+  environment.systemPackages =
+    cfg.env.base
+    ++ cfg.env.extend
+    ++ [cfg.opencode.package];
 
   environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencode.config != null) {
     text = cfg.opencode.config;
