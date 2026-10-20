@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -120,7 +121,7 @@
             '';
 
             type = lib.types.package;
-            default = pkgs.opencode;
+            default = inputs.opencode.packages.opencode;
           };
 
           config = lib.mkOption {

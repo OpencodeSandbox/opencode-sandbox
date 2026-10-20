@@ -1,26 +1,33 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "unsloth-studio": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Unsloth Studio",
-      "options": {
+  "model": "unsloth/qwen3.8",
+  "providers": {
+    "unsloth": {
+      "name": "Unsloth",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
         "baseURL": "http://10.0.2.10:8888/v1",
         "apiKey": "{env:UNSLOTH_API_KEY}"
       },
       "models": {
-        "unsloth/Qwen3.8-27B-GGUF:UD-Q8_K_XL": {
-          "name": "Qwen3.8 27B (local)"
+        "qwen3.8": {
+          "name": "Qwen3.8 (local)",
+          "modelID": "Qwen3.8-27B-GGUF:UD-Q8_K_XL",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 262144,
+          }
         }
       }
-    }
-  },
-  "model": "unsloth-studio/unsloth/Qwen3.8-27B-GGUF:UD-Q8_K_XL",
-  "lsp": {
-    "nil": {
-      "command": [
-        "nil"
-      ]
     }
   },
   "formatter": {
@@ -32,11 +39,6 @@
       "extensions": [
         ".nix"
       ]
-    }
-  },
-  "permission": {
-    "external_directory": {
-      "*": "allow"
     }
   }
 }
