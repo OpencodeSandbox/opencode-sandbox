@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "unsloth/qwen3.8",
+  "model": "unsloth/ornith-1.5",
   "providers": {
     "unsloth": {
       "name": "Unsloth",
@@ -10,9 +10,9 @@
         "apiKey": "{env:UNSLOTH_API_KEY}"
       },
       "models": {
-        "qwen3.8": {
-          "name": "Qwen3.8 (local)",
-          "modelID": "Qwen3.8-27B-GGUF:UD-Q8_K_XL",
+        "ornith-1.5": {
+          "name": "Ornith-1.5 (local)",
+          "modelID": "Ornith-1.5-35B-A3B-GGUF:Q8_0",
           "capabilities": {
             "tools": true,
             "input": [
