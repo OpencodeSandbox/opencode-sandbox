@@ -5,20 +5,19 @@
 }: let
   cfg = config.opencode-sandbox;
 in {
-  services.getty.autologinUser = lib.mkDefault "user";
   users.users.user = {
     group = "user";
     isNormalUser = true;
     extraGroups = ["wheel"];
+    packages =
+      cfg.env.base
+      ++ cfg.env.extend
+      ++ [cfg.opencode.package];
   };
   users.groups.user = {};
+  services.getty.autologinUser = lib.mkDefault "user";
 
   security.sudo.wheelNeedsPassword = false;
-
-  environment.systemPackages =
-    cfg.env.base
-    ++ cfg.env.extend
-    ++ [cfg.opencode.package];
 
   environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencode.config != null) {
     text = cfg.opencode.config;
