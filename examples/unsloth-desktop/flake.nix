@@ -18,9 +18,13 @@
           git.shutdown.pushOnExit = false;
           git.withLocalChanges = true;
 
-          forwardPorts = [8888];
+          # Allows you to mount your own config from `~/.config/opencode/`
+          # Requires `--impure` to be passed during evaluation.
+          # opencode.config.mountHomeConfig = true;
+          opencode.config.path = ./opencode.jsonc;
+
           env.extend = with pkgs; [nil alejandra];
-          opencode.config = ./opencode.jsonc;
+          forwardPorts = [8888];
         };
       };
 

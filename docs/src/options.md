@@ -267,6 +267,24 @@ Opencode configuration options.
 
 ## `opencode.config`
 
+_type_: `submodule`
+
+Opencode configuration files.
+
+## `opencode.config.mountHomeConfig`
+
+_type_: `boolean`
+
+_default_: `false`
+
+Whether of not to mount `~/.config/opencode/` into the
+sandbox.
+
+Requires `--impure` to be passed during derivation in order
+to run `builtins.getEnv "HOME"`.
+
+## `opencode.config.path`
+
 _type_: `null or (string or absolute path convertible to it)`
 
 Opencode configuration, either as a path to a file or as raw
@@ -275,8 +293,8 @@ JSON/JSONC.
 ### Example
 
 ```nix
-opencode.config = {
-  opencode.config = {
+opencode.config.path = {
+  opencode.config.path = {
     "$schema": "https://opencode.ai/config.json",
     "model": "anthropic/claude-sonnet-4-5",
   };
