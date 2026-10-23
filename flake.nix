@@ -12,67 +12,67 @@
     opencode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {nixlib, ...} @ inputs: let
-    systems = ["x86_64-linux"];
-    util = nixlib.util {inherit systems inputs;};
-  in {
-    formatter = util.forEachSystem ({pkgs, ...}: pkgs.alejandra);
+  outputs = {nixlib, ...} @ inputs:
+    nixlib.flake inputs {
+      systems = ["x86_64-linux"];
 
-    nixosModules = util.forEachModule ({...}: {
-      sandbox = ./module;
-    });
+      formatter = {pkgs, ...}: pkgs.alejandra;
 
-    packages = util.forEachSystem ({
-      self,
-      system,
-      pkgs,
-      lib,
-      libmodules,
-      libpkgs,
-      ...
-    }: rec {
-      # Base sandbox package, see `module` for options and package configuration
-      sandbox = libpkgs.mkOverride ({opencode-sandbox ? {}, ...}: (libmodules.build {
-        name = "opencode-sandbox.sandbox.package";
-
-        modules = [
-          self.nixosModules.microvm
-          self.nixosModules.sandbox
-
-          ({...}: {
-            inherit opencode-sandbox;
-            system.stateVersion = "26.11";
-          })
-        ];
-      }));
-
-      # Auto-generates module option documentation off `module/options.nix`
-      docs = libmodules.docs {
-        modules = lib.attrValues self.nixosModules;
-        name = "opencode-sandbox";
+      nixosModules = {
+        sandbox = ./module;
       };
 
-      # CI dependencies, can be installed with `nix profile install .#ci`
-      ci = libpkgs.mkEnv {
-        packages = with pkgs; [
-          mdbook
-          typos
-          markdownlint-cli2
-          lychee
-        ];
+      packages = {
+        self,
+        system,
+        pkgs,
+        lib,
+        libmodules,
+        libpkgs,
+        ...
+      }: rec {
+        # Base sandbox package, see `module` for options and package configuration
+        sandbox = libpkgs.mkOverride ({opencode-sandbox ? {}, ...}: (libmodules.build {
+          name = "opencode-sandbox.sandbox.package";
+
+          modules = [
+            self.nixosModules.microvm
+            self.nixosModules.sandbox
+
+            ({...}: {
+              inherit opencode-sandbox;
+              system.stateVersion = "26.11";
+            })
+          ];
+        }));
+
+        # Auto-generates module option documentation off `module/options.nix`
+        docs = libmodules.docs {
+          modules = lib.attrValues self.nixosModules;
+          name = "opencode-sandbox";
+        };
+
+        # CI dependencies, can be installed with `nix profile install .#ci`
+        ci = libpkgs.mkEnv {
+          packages = with pkgs; [
+            mdbook
+            typos
+            markdownlint-cli2
+            lychee
+          ];
+        };
+
+        default = sandbox;
       };
 
-      default = sandbox;
-    });
-
-    devShells = util.forEachSystem ({
-      self,
-      pkgs,
-      ...
-    }: {
-      default = pkgs.mkShell {
-        packages = [self.packages.ci];
+      devShells = {
+        self,
+        pkgs,
+        ...
+      }: {
+        default = pkgs.mkShell {
+          packages = [self.packages.ci];
+        };
       };
-    });
-  };
+    };
 }

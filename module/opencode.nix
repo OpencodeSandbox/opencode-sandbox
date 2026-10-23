@@ -19,8 +19,8 @@ in {
 
   security.sudo.wheelNeedsPassword = false;
 
-  environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencode.config != null) {
-    text = cfg.opencode.config;
+  environment.etc."opencode-sandbox/opencode.jsonc" = lib.mkIf (cfg.opencode.config.path != null) {
+    text = cfg.opencode.config.path;
   };
 
   programs.bash.shellInit =
@@ -71,7 +71,7 @@ in {
       fi
 
       if [ "$status" -eq 0 ]; then
-        sudo poweroff
+        sudo systemctl poweroff
       fi
     '';
 }
