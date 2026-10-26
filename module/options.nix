@@ -1,4 +1,5 @@
 {
+  opencode,
   config,
   pkgs,
   lib,
@@ -120,21 +121,44 @@
             '';
 
             type = lib.types.package;
-            default = pkgs.opencode;
+            default = opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
           };
 
           config = lib.mkOption {
             description = ''
-              Opencode configuration, either as a path to a file or as raw
-              JSON/JSONC.
+              Opencode configuration files.
             '';
-            example = ''
-              {
-                "$schema": "https://opencode.ai/config.json",
-                "model": "anthropic/claude-sonnet-4-5",
-              }'';
 
-            type = lib.types.nullOr (lib.types.coercedTo lib.types.path builtins.readFile lib.types.str);
+            type = lib.types.submodule {
+              options = {
+                path = lib.mkOption {
+                  description = ''
+                    Opencode configuration, either as a path to a file or as raw
+                    JSON/JSONC.
+                  '';
+                  example = ''
+                    {
+                      "$schema": "https://opencode.ai/config.json",
+                      "model": "anthropic/claude-sonnet-4-5",
+                    }'';
+
+                  type = lib.types.nullOr (lib.types.coercedTo lib.types.path builtins.readFile lib.types.str);
+                };
+
+                mountHomeConfig = lib.mkOption {
+                  description = ''
+                    Whether of not to mount `~/.config/opencode/` into the
+                    sandbox.
+
+                    Requires `--impure` to be passed during derivation in order
+                    to run `builtins.getEnv "HOME"`.
+                  '';
+
+                  type = lib.types.bool;
+                  default = false;
+                };
+              };
+            };
           };
         };
       };

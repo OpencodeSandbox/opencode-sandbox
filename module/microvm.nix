@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   microvm.hypervisor = "qemu";
   microvm.mem = config.opencode-sandbox.limits.mem;
   microvm.vcpu = config.opencode-sandbox.limits.vcpu;
@@ -23,13 +27,21 @@
     }
   ];
 
-  microvm.shares = [
+  microvm.shares =
+    [
+      {
+        tag = "work";
+        source = ".sandbox";
+        mountPoint = "/home/user/work";
+      }
+    ]
+    ++ lib.optional
+    (config.opencode-sandbox.opencode.config.mountHomeConfig)
     {
-      tag = "work";
-      source = ".sandbox";
-      mountPoint = "/home/user/work";
-    }
-  ];
+      tag = "opencode";
+      source = "${builtins.getEnv "HOME"}/.config/opencode";
+      mountPoint = "/home/user/.config/opencode";
+    };
 
   microvm.writableStoreOverlay = "/nix/.rw-store";
   microvm.volumes = [
