@@ -23,11 +23,11 @@
     },
     "nixlib": {
       "locked": {
-        "lastModified": 1792767508,
-        "narHash": "sha256-hK2ceL08vbK4zhe4I5voUE0nGKI23FARFm9clRe76ms=",
+        "lastModified": 1793006716,
+        "narHash": "sha256-5MymMmZRV9loXxQAiXNEZkgXldYn43IEUyIz1jYbigY=",
         "owner": "nix-util",
         "repo": "nixlib",
-        "rev": "5f6895ec7419bad5cd4f3e17ff248fa8464c834d",
+        "rev": "068a628403995e2230ff4f357ceb713e345af46a",
         "type": "github"
       },
       "original": {

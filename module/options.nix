@@ -1,5 +1,5 @@
 {
-  opencode,
+  opencode',
   config,
   pkgs,
   lib,
@@ -121,7 +121,7 @@
             '';
 
             type = lib.types.package;
-            default = opencode.packages.opencode;
+            default = opencode'.packages.opencode;
           };
 
           config = lib.mkOption {
