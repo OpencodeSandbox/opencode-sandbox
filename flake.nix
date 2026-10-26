@@ -13,16 +13,25 @@
   };
 
   outputs = {nixlib, ...} @ inputs:
-    nixlib.flake inputs ({self, ...}: {
+    nixlib.flake inputs ({
+      self,
+      opencode,
+      ...
+    }: {
       systems = ["x86_64-linux"];
 
       nixosModules = {
         inherit (inputs.microvm.nixosModules) microvm;
-        sandbox = ./module;
+
+        sandbox = {...}: {
+          imports = [./module];
+          _module.args.opencode = opencode;
+        };
       };
 
       perSystem = {
         self',
+        opencode',
         pkgs,
         lib,
         libmodules,
@@ -32,6 +41,8 @@
         formatter = pkgs.alejandra;
 
         packages = rec {
+          inherit (opencode'.packages) opencode;
+
           # Base sandbox package, see `module` for options and package configuration
           sandbox = libpkgs.mkOverride ({opencode-sandbox ? {}, ...}: (libmodules.build {
             name = "opencode-sandbox.sandbox.package";

@@ -1,5 +1,5 @@
 {
-  opencode',
+  opencode,
   config,
   pkgs,
   lib,
@@ -121,7 +121,7 @@
             '';
 
             type = lib.types.package;
-            default = opencode'.packages.opencode;
+            default = opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
           };
 
           config = lib.mkOption {

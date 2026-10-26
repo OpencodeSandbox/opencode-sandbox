@@ -24,11 +24,11 @@
     },
     "nixlib": {
       "locked": {
-        "lastModified": 1793006716,
-        "narHash": "sha256-5MymMmZRV9loXxQAiXNEZkgXldYn43IEUyIz1jYbigY=",
+        "lastModified": 1793008792,
+        "narHash": "sha256-LfEZqNYu5bLUkNHM11F8HpzKu7lI/p24SAX+0y2DoC8=",
         "owner": "nix-util",
         "repo": "nixlib",
-        "rev": "068a628403995e2230ff4f357ceb713e345af46a",
+        "rev": "6f574dc8d0c9894483f745cb0183a2b1f085d13c",
         "type": "github"
       },
       "original": {
@@ -99,7 +99,7 @@
       },
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-wwK6b9sjn5tzubZpj+VTKzN7VdE2fDKkDNyFUXRyyIo=",
+        "narHash": "sha256-Em6DmpxddzWkdN7WfobhWr8xI9L8AR4DQY1UGxheFP4=",
         "path": "../../.",
         "type": "path"
       },
